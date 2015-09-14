@@ -1,0 +1,35 @@
+{
+  "name": "most-web-csv",
+  "version": "0.1.0",
+  "description": "Most Web Framework CSV Handler",
+  "homepage": "http://www.themost.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kbarbounakis/most-web-csv.git"
+  },
+  "keywords": [
+    "csv",
+    "most",
+    "web"
+  ],
+  "author": {
+    "name": "Kyriakos Barbounakis",
+    "email": "k.barbounakis@gmail.com"
+  },
+  "licenses": [
+    {
+      "type": "BSD-3 Clause"
+    }
+  ],
+  "dependencies": {
+    "fast-csv": "^0.6.0"
+  },
+  "devDependencies": {},
+  "main": "index.js",
+  "scripts": {},
+  "_id": "most-web-csv@0.1.0",
+  "_from": "most-web-csv@",
+  "bugs": {
+    "url": "https://github.com/kbarbounakis/most-web-csv/issues"
+  }
+}
