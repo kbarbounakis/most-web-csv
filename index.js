@@ -21,6 +21,10 @@ HttpCsvResult.prototype.execute = function(context, callback) {
     var self = this,
         csv = require('fast-csv');
     try {
+        if (!util.isArray(this.data)) {
+            context.response.writeHead(422);
+            return callback.call(context);
+        }
         context.response.writeHead(this.responseStatus || 200, { "Content-Type": this.contentType });
         csv.writeToString(this.data, { headers: true, transform: function(row){
             var keys = Object.keys(row);

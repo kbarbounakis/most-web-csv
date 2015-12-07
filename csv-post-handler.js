@@ -18,8 +18,7 @@ function CsvPostHandler() {
 
 }
 
-
-CsvPostHandler.prototype.beginRequest = function(context, callback) {
+CsvPostHandler.prototype.postMapRequest = function(context, callback) {
     try {
         var request = context.request;
         //extend params object (parse form data)
@@ -37,15 +36,59 @@ CsvPostHandler.prototype.beginRequest = function(context, callback) {
                 if (file.type !== 'text/csv') {
                     return callback();
                 }
+
+                /**
+                 * @type DataModel
+                 */
+                var model;
+                if (context.request && context.request.route) {
+                    var controller = context.request.route.data("controller");
+                    if (controller) {
+                        model = context.model(controller);
+                    }
+                }
                 var stream = fs.createReadStream(file.path);
-                var arr = [];
+                var arr = [], headers = [], i, x, field;
                 var csvStream = csv()
                     .on("data", function(data){
-                        arr.push(data);
+                        if (headers.length==0) {
+                            //prepare headers
+                            if (typeof model === 'undefined' || model==null) {
+                                headers = data.map(function(y) { return { name:y } });
+                            }
+                            else {
+                                data.forEach(function(y) {
+                                    field = model.attributes.find(function(z) {
+                                        //create regular expression with field name or field title
+                                        var re = new RegExp('^' + z.name + '$|^' + z.title + '$','i');
+                                        //test header
+                                        return re.test(y);
+                                    });
+                                    if (field) {
+                                        headers.push(field);
+                                    }
+                                    else {
+                                        headers.push({ name:y });
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            x = { };
+                            for ( i = 0; i < data.length; i++) {
+                                if (headers[i]) {
+                                    x[headers[i].name] = data[i];
+                                }
+
+                            }
+                            arr.push(x);
+                        }
                     })
-                    .on("end", function(){
-                        console.log(arr);
-                        done();
+                    .on("end", function() {
+                        if (model) {
+                            context.params.data = arr;
+                        }
+                        return callback();
                     });
                 stream.pipe(csvStream);
             }
@@ -59,7 +102,6 @@ CsvPostHandler.prototype.beginRequest = function(context, callback) {
         console.log(e);
         callback(new Error("An internal server error occured while parsing request data."));
     }
-
 };
 
 if (typeof exports !== 'undefined') {
