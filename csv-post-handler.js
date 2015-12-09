@@ -33,7 +33,7 @@ CsvPostHandler.prototype.postMapRequest = function(context, callback) {
                 if (typeof file === 'undefined' || file == null) {
                     return callback();
                 }
-                if (file.type !== 'text/csv') {
+                if (file.type !== 'text/csv' && file.type !=='application/vnd.ms-excel') {
                     return callback();
                 }
 

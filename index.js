@@ -29,11 +29,18 @@ HttpCsvResult.prototype.execute = function(context, callback) {
         csv.writeToString(this.data, { headers: true, transform: function(row){
             var keys = Object.keys(row);
             for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
+                var key = keys[i], header;
+                if (typeof self.header === 'function') {
+                    header = self.header(key);
+                }
                 if (typeof row[key] === 'object' && row[key] != null && !(row[key] instanceof Date)) {
                     if (row[key].name) {
                         row[key] = row[key].name;
                     }
+                }
+                if (header && key!==header) {
+                    row[header]=row[key];
+                    delete row[key];
                 }
             }
             return row;
