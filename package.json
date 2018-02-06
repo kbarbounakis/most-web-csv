@@ -1,6 +1,6 @@
 {
-  "name": "most-web-csv",
-  "version": "0.1.1",
+  "name": "@themost/csv",
+  "version": "2.0.1",
   "description": "Most Web Framework CSV Handler",
   "homepage": "http://www.themost.io/",
   "repository": {
@@ -10,25 +10,27 @@
   "keywords": [
     "csv",
     "most",
+    "@themost",
     "web"
   ],
   "author": {
     "name": "Kyriakos Barbounakis",
     "email": "k.barbounakis@gmail.com"
   },
-  "licenses": [
-    {
-      "type": "BSD-3 Clause"
-    }
-  ],
+  "license": "BSD-3-Clause",
   "dependencies": {
-    "fast-csv": "^0.6.0"
+    "@themost/common": "^2.0.6",
+      "@themost/web": "^2.0.8",
+    "fast-csv": "^2.4.1",
+    "lodash": "^4.17.5",
+    "moment": "^2.20.1"
+  },
+  "peerDependencies": {
+    "@themost/web": "^2.0.8"
   },
   "devDependencies": {},
   "main": "index.js",
   "scripts": {},
-  "_id": "most-web-csv@0.1.0",
-  "_from": "most-web-csv@",
   "bugs": {
     "url": "https://github.com/kbarbounakis/most-web-csv/issues"
   }

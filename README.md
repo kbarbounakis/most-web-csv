@@ -1,14 +1,35 @@
-# most-web-csv
+# @themost/csv
 Most Web Framework CSV Handler
 
-Use this handler by adding the following code in application extensions (use app/extensions/data-controller-extensions.js or create a new one if it does not exist):
+#### Install
 
-    var HttpDataController = require('most-web').controllers.HttpDataController,
-        HttpCsvResult = require('most-web-csv').HttpCsvResult;
-      
-      HttpDataController.prototype.csv = function(data) {
-          return new HttpCsvResult(data);
-      };
+    npm install @themost/csv
+
+Note: If you want to install the previous version (0.1.x) of most-web-csv module use:
+
+    npm install most-web-csv 
+
+    
+#### Usage
+
+Use this handler by extending HttpDataController class:
+
+    //# http-data-controller-extensions.js
+    import {HttpDataController} from '@themost/web/controllers/data';
+    
+    Object.assign(HttpDataController.prototype, {
+        /**
+        * @this HttpDataController
+        */
+        csv:(data)=> {
+            return new HttpCsvResult(data);
+        }
+    });
+
+    //# server.js
+    import './http-data-controller-extensions';
+    ...
+    ...    
 
 Register default route for /[controller]/[action].csv requests in config/routes.json:
 

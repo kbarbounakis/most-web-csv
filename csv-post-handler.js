@@ -51,7 +51,7 @@ CsvPostHandler.prototype.postMapRequest = function(context, callback) {
                 var arr = [], headers = [], i, x, field;
                 var csvStream = csv()
                     .on("data", function(data){
-                        if (headers.length==0) {
+                        if (headers.length===0) {
                             //prepare headers
                             if (typeof model === 'undefined' || model==null) {
                                 headers = data.map(function(y) { return { name:y } });
