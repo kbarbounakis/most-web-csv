@@ -37,6 +37,8 @@ HttpCsvResult.prototype.execute = function(context, callback) {
         });
         csv.writeToString(this.data, {
             headers: true,
+            delimiter: ';',
+            rowDelimiter: '\r\n',
             transform: function(row) {
                 var keys = _.keys(row);
                 var res ={};
