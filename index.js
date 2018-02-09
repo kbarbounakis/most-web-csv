@@ -68,6 +68,8 @@ HttpCsvResult.prototype.execute = function(context, callback) {
             if (err) {
                 return callback(err);
             }
+            //write BOM - Byte Order Mark (for UTF-8)
+            context.response.write(new Buffer('EFBBBF', 'hex'));
             context.response.write(data, self.contentEncoding);
             return callback();
         });
